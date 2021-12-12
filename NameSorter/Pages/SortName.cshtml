@@ -1,0 +1,45 @@
+﻿@page
+@model NameSorter.Pages.SortNameModel
+@{
+}
+
+<div>
+    <h1>Sorting Name By Last Name</h1>
+    <form name="SortNameForm" id="SortNameForm" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        Unsorted Name:
+        <br />
+        <input asp-for="Upload" type="file" class="form-control" autofocus  />
+        <span asp-validation-for="Upload" class="text-danger"></span>
+        <br />
+
+        <input id="SubmitButton" type="submit" class="btn btn-info" />
+
+        <hr />
+
+        @*<a href="D:\KST\NameSorter\NameSorter\sortedFiles\sorted-names-list.txt">Download FIle</a>*@
+    </form>
+
+    @if (Model.SortedNames != null)
+    {
+        <p>Sorted Name:</p>
+        <form method="post">
+            <button type="submit" asp-page-handler="DownloadFile" class="btn btn-info">
+                Download
+            </button>
+        </form>
+
+
+        @*<textarea name="SortedName" class="form-control" value="@Model.sortedNames"></textarea>*@
+        <br />
+
+        <textarea rows="10" class="form-control" readonly>
+            @foreach (var item in Model.SortedNames)
+            {
+                @item
+                @Html.Raw("\n")
+            }
+        </textarea>
+    }
+</div>
