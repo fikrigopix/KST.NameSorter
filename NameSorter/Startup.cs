@@ -1,23 +1,23 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NameSorter.Services;
 using NameSorter.Services.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace NameSorter
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _environment;
+
+        public Startup(IConfiguration configuration,
+                        IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            _environment = environment;
         }
 
         public IConfiguration Configuration { get; }
@@ -27,6 +27,12 @@ namespace NameSorter
         {
             services.AddRazorPages();
             services.AddScoped<ISortByLastNameService, SortByLastNameService>();
+
+            string sortedFiles = Path.Combine(_environment.WebRootPath, "sortedFiles");
+            string uploads = Path.Combine(_environment.ContentRootPath, "uploads");
+            // Create directory if it doesn't exist
+            Directory.CreateDirectory(sortedFiles);
+            Directory.CreateDirectory(uploads);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

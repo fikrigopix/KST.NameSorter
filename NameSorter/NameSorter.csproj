@@ -4,9 +4,4 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="uploads\" />
-    <Folder Include="wwwroot\sortedFiles\" />
-  </ItemGroup>
-
 </Project>
